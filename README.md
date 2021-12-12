@@ -9,7 +9,7 @@ Sensible webpack 5 boilerplate using Babel, PostCSS and Sass.
 Clone this repo and npm install.
 
 ```bash
-npm i
+yarn
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ npm i
 ### Development server
 
 ```bash
-npm start
+yarn start
 ```
 
 You can view the development server at `localhost:8080`.
@@ -88,10 +88,3 @@ cd dist && http-server
   - - [`prettier`](https://github.com/prettier/prettier) - Dependency for `prettier-webpack-plugin` plugin
 - [`eslint-import-resolver-webpack`](https://github.com/benmosher/eslint-plugin-import/tree/master/resolvers/webpack) - Throw exceptions for import/export in webpack
 
-## Author
-
-- [Tania Rascia](https://www.taniarascia.com)
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
