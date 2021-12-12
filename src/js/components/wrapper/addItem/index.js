@@ -1,4 +1,5 @@
 import { addToStore } from "@/js/store";
+import { validateFields } from "./validation";
 
 const inputName = () => {
     const element = document.createElement('input');
@@ -28,7 +29,7 @@ const inputDescription = () => {
 
 const inputWatcher = () => {
     const element = document.createElement('div');
-
+    element.classList.add('checkbox-wrap')
     const elementCheckbox = document.createElement('input');
     elementCheckbox.classList.add('add-watched');
     elementCheckbox.name = 'watch';
@@ -37,7 +38,7 @@ const inputWatcher = () => {
 
     const elementLabel = document.createElement('label');
     elementLabel.setAttribute('for', elementCheckbox.id);
-    elementLabel.textContent = 'Already Watched';
+    elementLabel.textContent = 'Liked';
 
     element.append(elementCheckbox, elementLabel);
 
@@ -59,11 +60,15 @@ const imagePicker = () => {
     const images = importAll(require.context('../../../../images/kittens', false, /\.\/.*\.jpg$/));
 
     const elements = images.map(path => {
+        const imgWrapper = document.createElement('div');
+        imgWrapper.classList.add('img-wrap');
         const img = document.createElement('img');
         img.classList.add('add-image')
         img.src = path;
 
-        return img;
+        imgWrapper.append(img);
+
+        return imgWrapper;
     });
 
     elements.forEach(img => {
@@ -84,26 +89,48 @@ const submitButton = () => {
 
     element.addEventListener('click', (e) => {
         e.preventDefault();
-        const name = document.querySelector('.add-name');
-        const description = document.querySelector('.add-description');
-        const watch = document.querySelector('.add-watched');
-        const image = document.querySelector('.add-image.selected');
+        const form = document.querySelector('form');
+        const imgPicker = form.querySelector('.image-picker');
+        const name = form.querySelector('.add-name');
+        const description = form.querySelector('.add-description');
+        const watch = form.querySelector('.add-watched');
+        const imageWrap = form.querySelector('.img-wrap.selected');
+        const message = form.querySelector('.validation-message');
+        const image = imageWrap && imageWrap.querySelector('.add-image');
 
-        addToStore({
-            id: idGenerator(),
-            name: name.value,
-            descr: description.value,
-            watch: watch.checked,
-            img: image.src
-        })
+        if (validateFields(form)) {
+            addToStore({
+                id: idGenerator(),
+                name: name.value,
+                descr: description.value,
+                watch: watch.checked,
+                img: image.src
+            })
 
-        name.value = '';
-        description.value = '';
-        watch.checked = false;
+            name.value = '';
+            description.value = '';
+            watch.checked = false;
+            image.classList.remove('selected');
+            if (message) {
+                message.remove();
+            }
+        } else {
+            if (!message) {
+                imgPicker.after(validationMessage())
+            };
+        }
     })
 
     return element;
 };
+
+const validationMessage = () => {
+    const element = document.createElement('div');
+    element.classList.add('validation-message');
+    element.textContent = 'Please fill all fields and pick kitten ;)'
+
+    return element;
+}
 
 const idGenerator = () => {
     let array = new Uint32Array(8)

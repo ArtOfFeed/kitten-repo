@@ -1,6 +1,6 @@
 import { removeFromStoreById } from "@/js/store";
 
-export const singleItem = (id, name, description, watched = false, img = 'https://via.placeholder.com/150') => {
+export const singleItem = (id, name, description, watched = false, img) => {
     const element = document.createElement('div');
     element.classList.add('single-item');
     element.id = id;
@@ -11,9 +11,8 @@ export const singleItem = (id, name, description, watched = false, img = 'https:
     const elementDescription = document.createElement('p');
     elementDescription.textContent = description;
 
-    const elementWatched = document.createElement('input');
-    elementWatched.type = 'checkbox';
-    elementWatched.checked = watched;
+    const elementWatched = document.createElement('span');
+    elementWatched.classList.add(watched ? 'liked' : 'unliked');
 
     const elementImage = document.createElement('img');
     elementImage.src = img;
