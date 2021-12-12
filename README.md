@@ -9,7 +9,7 @@ Sensible webpack 5 boilerplate using Babel, PostCSS and Sass.
 Clone this repo and npm install.
 
 ```bash
-npm i
+yarn
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ npm i
 ### Development server
 
 ```bash
-npm start
+yarn start
 ```
 
 You can view the development server at `localhost:8080`.
